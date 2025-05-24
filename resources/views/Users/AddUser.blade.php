@@ -74,8 +74,8 @@
                 <div class="card-body py-4 px-4">
                   <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
                     <div class="mb-2 mb-md-0">
-                      <h4 class="mb-1 text-primary fw-semibold">Add Dashboard User</h4>
-                      <p class="text-muted mb-0">Fill out the form below to add a new dashboard user</p>
+                      <h4 class="mb-1 text-primary fw-semibold">Add User</h4>
+                      <p class="text-muted mb-0">Fill out the form below to add a new user</p>
                     </div>
 
                   </div>
@@ -89,7 +89,7 @@
                   <div class="card-body">
                 
 
-                    <form id="employeeForm" action="{{ route('employee.store') }}" method="POST"
+                    <form id="employeeForm" action="{{ route('users.store') }}" method="POST"
                       enctype="multipart/form-data" novalidate>
                       @csrf
 
@@ -106,7 +106,7 @@
 
                       <div class="mb-3">
                         <label for="phone" class="form-label">Phone Number*</label>
-                        <input type="text" class="form-control" name="phone" id="phone" required maxlength="10"
+                        <input type="text" class="form-control" name="phone_number" id="phone" required maxlength="10"
                           pattern="\d{10}" title="Enter 10 digit number">
                       </div>
 
@@ -128,22 +128,22 @@
                           </div>
                         </div>
                       </div>
-        <div class="mb-3">
-                        <label for="user_type" class="form-label">User Type*</label>
-                        <select class="form-control" name="user_type" id="user_type" required>
-                          <option value="">-- Select User Type --</option>
-                          <option value="Admin">Admin</option>
-                          <option value="Operator">Operator</option>
-                        </select>
+     
+                      <div class="row mb-4">
+                        <div class="col-md-6">
+                          <label for="avatar" class="form-label">Upload Image </label>
+                          <input type="file" class="form-control" name="avatar" id="avatar" accept="image/*">
+                        </div>
+                     
                       </div>
                       <div class="row mb-4">
                         <div class="col-md-6">
                           <label for="adhar_image" class="form-label">Upload Adhar Image</label>
-                          <input type="file" class="form-control" name="adhar_image" id="adhar_image" accept="image/*">
+                          <input type="file" class="form-control" name="aadhaar_image" id="adhar_image" accept="image/*">
                         </div>
                         <div class="col-md-6">
                           <label for="pan_image" class="form-label">Upload Pan Card</label>
-                          <input type="file" class="form-control" name="pan_image" id="pan_image" accept="image/*">
+                          <input type="file" class="form-control" name="pan_card_image" id="pan_image" accept="image/*">
                         </div>
                       </div>
 

@@ -101,7 +101,7 @@
                             <div class="card ">
                                 <div class="card-body card-breadcrumb">
                                     <div class="page-title-box d-flex align-items-center justify-content-between">
-                                        <h4 class="mb-0">Operator List</h4>
+                                        <h4 class="mb-0">User List</h4>
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +112,7 @@
                             <div class="card">
                                 <div class="card-body" style="max-height: 500px; overflow-y: auto;">
                                     <div class="card-title">
-                                        <h4>All Operator List</h4>
+                                        <h4>All User List</h4>
                                     </div>
 
                                     <table class="table table-bordered nowrap data-table-area"
@@ -133,56 +133,45 @@
                                         </thead>
 
                                         <tbody>
-                                            @foreach ($employees as $employee)
+                                            @foreach ($users as $user)
                                                 <tr>
-                                                    <td>{{ $employees->firstItem() + $loop->index }}</td>
-                                                    <td>{{ $employee->name }}</td>
-                                                    <td>{{ $employee->email }}</td>
-                                                    <td>{{ $employee->phone }}</td>
-                                                    <!-- <td>{{ $employee->address }}</td>
-                                                    <td><img class="shop-img"
-                                                            src="{{ asset('storage/' . $employee->adhar_image) }}" alt="" />
-                                                    </td>
-                                                    <td><img class="shop-img"
-                                                            src="{{ asset('storage/' . $employee->pan_image) }}" alt="" />
-                                                    </td> -->
-                                                    <td>{{ \Carbon\Carbon::parse($employee->created_at)->format('d-m-Y') }}
+                                                    <td>{{ $users->firstItem() + $loop->index }}</td>
+                                                    <td>{{ $user->name }}</td>
+                                                    <td>{{ $user->email }}</td>
+                                                    <td>{{ $user->phone_number }}</td>
+                                                    <!-- <td>{{ $user->address }}</td>
+                                                        <td><img class="shop-img"
+                                                                src="{{ asset('storage/' . $user->adhar_image) }}" alt="" />
+                                                        </td>
+                                                        <td><img class="shop-img"
+                                                                src="{{ asset('storage/' . $user->pan_image) }}" alt="" />
+                                                        </td> -->
+                                                    <td>{{ \Carbon\Carbon::parse($user->created_at)->format('d-m-Y') }}
                                                     </td>
                                                     <td>
                                                         <span
-                                                            class="badge {{ $employee->user_status === 'Active' ? 'bg-success' : 'bg-secondary' }}">
-                                                            {{ ucfirst($employee->user_status) }}
+                                                            class="badge {{ $user->verification_status === 'Verified' ? 'bg-success' : 'bg-secondary' }}">
+                                                            {{ ucfirst($user->verification_status) }}
                                                         </span>
                                                     </td>
 
                                                     <td class="order-btn d-flex">
-                                                          @if ($employee->user_status == 'Active')
-                                                            <form action="{{ route('employee.deactivate', $employee->id) }}"
-                                                                method="POST" class="me-2">
-                                                                @csrf
-                                                                <button type="submit"
-                                                                    class="btn btn-sm btn-danger">Inactive</button>
-                                                            </form>
-                                                        @else
-                                                            <form action="{{ route('employee.activate', $employee->id) }}"
-                                                                method="POST" class="me-2">
-                                                                @csrf
-                                                                <button type="submit"
-                                                                    class="btn btn-sm btn-primary">Activate</button>
-                                                            </form>
-                                                        @endif
-
-                                                           <a href="{{ route('add-employee.show', $employee->id) }}"
-                                                            class="text-info mx-2" title="View">
-                                                            <i class="fas fa-eye"></i>
-                                                        </a>
-                                                        <a href="{{ route('add-employee.edit', $employee->id) }}"
-                                                            class="edit text-primary mx-2" title="Edit">
+                                                        <form action="{{ route('users.verification.toggle', $user->id) }}"
+                                                            method="POST" class="me-2">
+                                                            @csrf
+                                                            <input type="hidden" name="status"
+                                                                value="{{ $user->verification_status === 'Verified' ? 'Unverified' : 'Verified' }}">
+                                                            <button type="submit"
+                                                                class="btn btn-sm {{ $user->verification_status === 'Verified' ? 'btn-danger' : 'btn-primary' }}">
+                                                                {{ $user->verification_status === 'Verified' ? 'Unverify' : 'Verify' }}
+                                                            </button>
+                                                        </form>
+                                                  
+                                                        <a class="edit text-primary mx-2" title="Edit" href="{{ route('users.edit', $user->id) }}">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
-                                                        <form action="{{ route('add-operator.destroy', $employee->id) }}"
-                                                            method="POST"
-                                                            onsubmit="return confirm('Are you sure you want to delete this operator?')">
+                                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                                            onsubmit="return confirm('Are you sure you want to delete this user?')">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit"
@@ -201,7 +190,7 @@
 
                                     <!-- Pagination -->
                                     <div class="d-flex justify-content-end mt-3">
-                                        {!! $employees->links('pagination::bootstrap-5') !!}
+                                        {!! $users->links('pagination::bootstrap-5') !!}
                                     </div>
 
                                 </div>

@@ -101,7 +101,7 @@
                             <div class="card ">
                                 <div class="card-body card-breadcrumb">
                                     <div class="page-title-box d-flex align-items-center justify-content-between">
-                                        <h4 class="mb-0">Operator List</h4>
+                                        <h4 class="mb-0">Admin List</h4>
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +112,7 @@
                             <div class="card">
                                 <div class="card-body" style="max-height: 500px; overflow-y: auto;">
                                     <div class="card-title">
-                                        <h4>All Operator List</h4>
+                                        <h4>All Admin List</h4>
                                     </div>
 
                                     <table class="table table-bordered nowrap data-table-area"
@@ -133,38 +133,40 @@
                                         </thead>
 
                                         <tbody>
-                                            @foreach ($employees as $employee)
+                                            @foreach ($admins as $admin)
                                                 <tr>
-                                                    <td>{{ $employees->firstItem() + $loop->index }}</td>
-                                                    <td>{{ $employee->name }}</td>
-                                                    <td>{{ $employee->email }}</td>
-                                                    <td>{{ $employee->phone }}</td>
-                                                    <!-- <td>{{ $employee->address }}</td>
+                                                    <td>{{ $admins->firstItem() + $loop->index }}</td>
+                                                    <td>{{ $admin->name }}</td>
+                                                    <td>{{ $admin->email }}</td>
+                                                    <td>{{ $admin->phone }}</td>
+                                                    <!-- <td>{{ $admin->address }}</td>
                                                     <td><img class="shop-img"
-                                                            src="{{ asset('storage/' . $employee->adhar_image) }}" alt="" />
+                                                            src="{{ asset('storage/' . $admin->adhar_image) }}" alt="" />
                                                     </td>
                                                     <td><img class="shop-img"
-                                                            src="{{ asset('storage/' . $employee->pan_image) }}" alt="" />
+                                                            src="{{ asset('storage/' . $admin->pan_image) }}" alt="" />
                                                     </td> -->
-                                                    <td>{{ \Carbon\Carbon::parse($employee->created_at)->format('d-m-Y') }}
-                                                    </td>
-                                                    <td>
-                                                        <span
-                                                            class="badge {{ $employee->user_status === 'Active' ? 'bg-success' : 'bg-secondary' }}">
-                                                            {{ ucfirst($employee->user_status) }}
-                                                        </span>
+                                                    <td>{{ \Carbon\Carbon::parse($admin->created_at)->format('d-m-Y') }}
                                                     </td>
 
+                                                    <td>
+                                                        <span
+                                                            class="badge {{ $admin->user_status === 'Active' ? 'bg-success' : 'bg-secondary' }}">
+                                                            {{ ucfirst($admin->user_status) }}
+                                                        </span>
+                                                    </td>
                                                     <td class="order-btn d-flex">
-                                                          @if ($employee->user_status == 'Active')
-                                                            <form action="{{ route('employee.deactivate', $employee->id) }}"
+
+                                                     
+                                                        @if ($admin->user_status == 'Active')
+                                                            <form action="{{ route('employee.deactivate', $admin->id) }}"
                                                                 method="POST" class="me-2">
                                                                 @csrf
                                                                 <button type="submit"
                                                                     class="btn btn-sm btn-danger">Inactive</button>
                                                             </form>
                                                         @else
-                                                            <form action="{{ route('employee.activate', $employee->id) }}"
+                                                            <form action="{{ route('employee.activate', $admin->id) }}"
                                                                 method="POST" class="me-2">
                                                                 @csrf
                                                                 <button type="submit"
@@ -172,17 +174,18 @@
                                                             </form>
                                                         @endif
 
-                                                           <a href="{{ route('add-employee.show', $employee->id) }}"
+   <a href="{{ route('add-employee.show', $admin->id) }}"
                                                             class="text-info mx-2" title="View">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
-                                                        <a href="{{ route('add-employee.edit', $employee->id) }}"
+                                                        <a href="{{ route('add-employee.edit', $admin->id) }}"
                                                             class="edit text-primary mx-2" title="Edit">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
-                                                        <form action="{{ route('add-operator.destroy', $employee->id) }}"
+
+                                                        <form action="{{ route('add-admin.destroy', $admin->id) }}"
                                                             method="POST"
-                                                            onsubmit="return confirm('Are you sure you want to delete this operator?')">
+                                                            onsubmit="return confirm('Are you sure you want to delete this admin?')">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit"
@@ -201,7 +204,7 @@
 
                                     <!-- Pagination -->
                                     <div class="d-flex justify-content-end mt-3">
-                                        {!! $employees->links('pagination::bootstrap-5') !!}
+                                        {!! $admins->links('pagination::bootstrap-5') !!}
                                     </div>
 
                                 </div>

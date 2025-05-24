@@ -18,6 +18,8 @@ class Employee extends Authenticatable
         'avatar',
         'adhar_image',
         'pan_image',
+        'user_type',
+        'user_status',
     ];
 
     protected $hidden = [

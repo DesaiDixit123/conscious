@@ -15,7 +15,7 @@ class AuthController extends Controller
     }
 
     // Login logic
-    public function login(Request $request)
+ public function login(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
@@ -39,20 +39,25 @@ class AuthController extends Controller
         // Check for Employee
         $employee = Employee::where('email', $request->email)->first();
 
-        if ($employee && Hash::check($request->password, $employee->password)) {
-            session([
-                'employee_logged_in' => true,
-                'employee_id' => $employee->id,
-                'employee_name' => $employee->name,
-                'employee_email' => $employee->email,
-            ]);
+        if ($employee) {
+            if ($employee->user_status !== 'Active') {
+                return back()->with('error', 'Your account is not active.');
+            }
 
-            return redirect()->route('dashboard'); // Create this route and view
+            if (Hash::check($request->password, $employee->password)) {
+                session([
+                    'employee_logged_in' => true,
+                    'employee_id' => $employee->id,
+                    'employee_name' => $employee->name,
+                    'employee_email' => $employee->email,
+                ]);
+
+                return redirect()->route('dashboard'); // Create this route and view
+            }
         }
 
         return back()->with('error', 'Invalid credentials.');
     }
-
     // Dashboard page
   public function dashboard()
 {
